@@ -31,16 +31,33 @@ namespace SharpRaven {
         /// </summary>
         public string Logger { get; set; }
 
+        /// <summary>
+        /// Allow HTTP Authentication
+        /// </summary>
+        public bool AllowHttpAuthentication { get; set; }
+
+        /// <summary>
+        /// Username for HTTP Authentication
+        /// </summary>
+        public string HttpAuthenticationUsername { get; set; }
+
+        /// <summary>
+        /// Password HTTP Authentication
+        /// </summary>
+        public string HttpAuthenticationPassword { get; set; }
+
         public RavenClient(string dsn) {
             CurrentDSN = new DSN(dsn);
             Compression = true;
             Logger = "root";
+            AllowHttpAuthentication = false;
         }
 
         public RavenClient(DSN dsn) {
             CurrentDSN = dsn;
             Compression = true;
             Logger = "root";
+            AllowHttpAuthentication = false;
         }
 
         public int CaptureException(Exception e)
@@ -104,6 +121,13 @@ namespace SharpRaven {
                 request.Headers.Add("X-Sentry-Auth", PacketBuilder.CreateAuthenticationHeader(dsn));
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
                 request.UserAgent = "RavenSharp/1.0";
+
+                if (AllowHttpAuthentication)
+                {
+                    NetworkCredential networkCredential = new NetworkCredential(HttpAuthenticationUsername, HttpAuthenticationPassword);
+                    request.PreAuthenticate = true;
+                    request.Credentials = networkCredential;
+                }
 
                 Console.WriteLine("Header: " + PacketBuilder.CreateAuthenticationHeader(dsn));
                 Console.WriteLine("Packet: " + packet.Serialize());
