@@ -65,12 +65,12 @@ namespace SharpRaven {
             return CaptureException(e, null, null);
         }
 
-        public int CaptureException(Exception e, Dictionary<string, string> tags = null)
+        public int CaptureException(Exception e, IDictionary<string, string> tags = null)
         {
             return CaptureException(e, tags, null);
         }
 
-        public int CaptureException(Exception e, Dictionary<string, string> tags = null, object extra = null)
+        public int CaptureException(Exception e, IDictionary<string, string> tags = null, object extra = null)
         {
             JsonPacket packet = new JsonPacket(CurrentDSN.ProjectID, e);
             packet.Level = ErrorLevel.error;
@@ -160,10 +160,14 @@ namespace SharpRaven {
                 Console.WriteLine(e.Message);
 
                 string messageBody = String.Empty;
-                using (StreamReader sw = new StreamReader(e.Response.GetResponseStream())) {
-                    messageBody = sw.ReadToEnd();
+                if (e.Response != null)
+                {
+                    using (StreamReader sw = new StreamReader(e.Response.GetResponseStream()))
+                    {
+                        messageBody = sw.ReadToEnd();
+                    }
+                    Console.WriteLine("[MESSAGE BODY] " + messageBody);
                 }
-                Console.WriteLine("[MESSAGE BODY] " + messageBody);
                 
                 return false;
             }

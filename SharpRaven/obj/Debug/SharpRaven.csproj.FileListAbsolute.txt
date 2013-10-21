@@ -16,3 +16,4 @@ C:\Projects\raven-csharp-alex347\SharpRaven\bin\Debug\Newtonsoft.Json.dll
 C:\Projects\raven-csharp-alex347\SharpRaven\obj\Debug\SharpRaven.csprojResolveAssemblyReference.cache
 C:\Projects\raven-csharp-alex347\SharpRaven\obj\Debug\SharpRaven.dll
 C:\Projects\raven-csharp-alex347\SharpRaven\obj\Debug\SharpRaven.pdb
+C:\Projects\raven-csharp-alex347\SharpRaven\bin\Debug\SharpRaven.xml
