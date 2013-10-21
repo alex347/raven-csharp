@@ -129,9 +129,6 @@ namespace SharpRaven {
                     request.Credentials = networkCredential;
                 }
 
-                Console.WriteLine("Header: " + PacketBuilder.CreateAuthenticationHeader(dsn));
-                Console.WriteLine("Packet: " + packet.Serialize());
-
                 // Write the messagebody.
                 using (Stream s = request.GetRequestStream()) {
                     using (StreamWriter sw = new StreamWriter(s)) {
